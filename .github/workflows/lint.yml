@@ -15,5 +15,9 @@ jobs:
           pip install nbconvert flake8
       - name: Run Lint
         run: |
-          jupyter nbconvert --to script *.ipynb
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          if ls *.ipynb 1> /dev/null 2>&1; then
+            jupyter nbconvert --to script *.ipynb
+            flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          else
+            echo "No notebooks found to lint."
+          fi
